@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basic Editor — Image Processing Using Matrices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      <div>
+        <h1>Basic Editor</h1>
+        <p>Image processing using matrices</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="btnImport">Import image</button>
+      <button class="btn gold" id="btnSave">Save as…</button>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Images">
+    <div class="tab-list" id="tabList" role="tablist"></div>
+    <button class="tab-add" id="btnAddTab" aria-label="Add tab" title="Add tab">+</button>
+  </nav>
+
+  <main class="layout">
+    <section class="workspace" id="workspace">
+      <div class="empty" id="empty">
+        <p>Drop an image here, or choose one from your device.</p>
+        <button class="btn gold" id="btnEmptyImport">Import image</button>
+      </div>
+
+      <div class="cmp" id="cmp" hidden>
+        <canvas id="cOrig"></canvas>
+        <canvas id="cProc"></canvas>
+        <span class="tag tag-l">Before</span>
+        <span class="tag tag-r">After</span>
+        <div class="divider" id="divider">
+          <button class="handle" id="handle" aria-label="Before and after divider"></button>
+        </div>
+      </div>
+      <p class="probe" id="probe">Hover over the image to inspect a pixel.</p>
+    </section>
+
+    <aside class="panel" id="panel">
+      <section>
+        <h2>Colour mode</h2>
+        <div class="seg" id="modeSeg">
+          <button data-mode="original">Original</button>
+          <button data-mode="gray">Grayscale</button>
+          <button data-mode="bw">Black &amp; White</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Brightness <output id="betaOut">0</output></h2>
+        <input type="range" id="beta" min="-100" max="100" step="1" value="0">
+        <p class="hint">C′ = clip(C + β, 0, 255)</p>
+      </section>
+
+      <section id="tRow" hidden>
+        <h2>Threshold <output id="tOut">128</output></h2>
+        <input type="range" id="thr" min="0" max="255" step="1" value="128">
+        <p class="hint">255 when Gray ≥ T, otherwise 0</p>
+      </section>
+
+      <section>
+        <h2>Transform</h2>
+        <div class="seg two">
+          <button id="flipH" aria-pressed="false">Flip horizontal</button>
+          <button id="flipV" aria-pressed="false">Flip vertical</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Image information</h2>
+        <dl class="info">
+          <dt>Name</dt><dd id="iName">—</dd>
+          <dt>Width</dt><dd id="iW">—</dd>
+          <dt>Height</dt><dd id="iH">—</dd>
+          <dt>Pixels (N)</dt><dd id="iN">—</dd>
+          <dt>Array length</dt><dd id="iL">—</dd>
+        </dl>
+      </section>
+
+      <button class="btn wide" id="btnReset">Reset this image</button>
+    </aside>
+  </main>
+
+  <input type="file" id="file" accept="image/*" hidden>
+  <script src="imageMath.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
